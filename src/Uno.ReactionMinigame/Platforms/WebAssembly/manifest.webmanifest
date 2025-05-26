@@ -1,0 +1,10 @@
+{
+  "background_color": "#ffffff",
+  "description": "Uno.ReactionMinigame",
+  "display": "standalone",
+  "name": "Uno.ReactionMinigame",
+  "short_name": "Uno.ReactionMinigame",
+  "start_url": "/index.html",
+  "theme_color": "#ffffff",
+  "scope": "/"
+}
