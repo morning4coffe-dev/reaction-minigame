@@ -43,9 +43,3 @@ public sealed partial class LeaderboardsPage : Page
         //}
     }
 }
-
-public class LeaderboardEntry
-{
-    public string Name { get; set; }
-    public string Email { get; set; }
-}

@@ -5,17 +5,17 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:Uno.ReactionMinigame"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Background="{ThemeResource TechoramaYellow}"
     mc:Ignorable="d">
 
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="ms-appx:///Assets/basketball-court.png" />
+            <ImageBrush ImageSource="ms-appx:///Assets/basketball-court.png" Stretch="UniformToFill" />
         </Grid.Background>
-        <Grid Padding="20">
+        <Grid>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="320" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -25,9 +25,9 @@
             <StackPanel
                 Padding="8"
                 Background="#2c6090"
-                BorderBrush="Black"
+                BorderBrush="#2c6090"
                 BorderThickness="0,0,0,4"
-                Spacing="16">
+                Spacing="8">
                 <StackPanel
                     HorizontalAlignment="Center"
                     Orientation="Horizontal"
@@ -36,6 +36,7 @@
                     <TextBlock
                         VerticalAlignment="Center"
                         FontSize="40"
+                        Foreground="White"
                         Text="+" />
                     <Image Width="240" Source="ms-appx:///Assets/unologo.png" />
                 </StackPanel>
@@ -43,18 +44,32 @@
                     HorizontalAlignment="Center"
                     FontSize="30"
                     FontWeight="Black"
+                    Foreground="White"
                     Text="Reaction Challenge" />
             </StackPanel>
 
-            <Frame x:Name="MainFrame" Grid.Row="1" />
+            <Grid Grid.Row="1" Padding="20">
+                <Frame x:Name="MainFrame" />
+            </Grid>
 
             <Grid
                 x:Name="Leaderboard"
                 Grid.RowSpan="2"
                 Grid.Column="1"
-                BorderBrush="Black"
+                BorderBrush="#2c6090"
                 BorderThickness="4,0,0,0">
                 <!--  Leaderboard goes here  -->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid Background="{ThemeResource TechoramaBlue}">
+                    <StackPanel>
+                        <TextBlock Text="TIME TO BEAT" />
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="1" />
             </Grid>
         </Grid>
     </Grid>

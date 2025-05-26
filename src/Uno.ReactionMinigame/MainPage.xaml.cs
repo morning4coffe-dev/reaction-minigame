@@ -1,4 +1,5 @@
 using Microsoft.UI;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Shapes;
 
@@ -9,18 +10,52 @@ public sealed partial class MainPage : Page
     private Random _random = new Random();
     private int _score = 0;
     private int _clicksRequired = 25;
-    private DispatcherTimer _timer;
+    private DispatcherTimer _gameTimer;
     private DateTime _startTime;
     private bool _gameOver = false;
+    private DispatcherQueueTimer _countdownTimer;
+    private int _countdownValue;
 
     public MainPage()
     {
         this.InitializeComponent();
+        StartCountdown();
+    }
 
-        _timer = new DispatcherTimer();
-        _timer.Interval = TimeSpan.FromMilliseconds(10);
-        _timer.Tick += OnTimerTick;
-        _timer.Start();
+    private void StartCountdown()
+    {
+        _countdownValue = 3;
+        CountdownTextBlock.Text = _countdownValue.ToString();
+        CountdownTextBlock.Visibility = Visibility.Visible;
+
+        _countdownTimer = DispatcherQueue.GetForCurrentThread().CreateTimer();
+        _countdownTimer.Interval = TimeSpan.FromSeconds(1);
+        _countdownTimer.Tick += CountdownTimer_Tick;
+        _countdownTimer.Start();
+    }
+
+    private void CountdownTimer_Tick(DispatcherQueueTimer sender, object args)
+    {
+        _countdownValue--;
+
+        if (_countdownValue > 0)
+        {
+            CountdownTextBlock.Text = _countdownValue.ToString();
+        }
+        else
+        {
+            _countdownTimer.Stop();
+            CountdownTextBlock.Visibility = Visibility.Collapsed;
+            StartReactionGame();
+        }
+    }
+
+    private void StartReactionGame()
+    {
+        _gameTimer = new DispatcherTimer();
+        _gameTimer.Interval = TimeSpan.FromMilliseconds(10);
+        _gameTimer.Tick += OnTimerTick;
+        _gameTimer.Start();
 
         _startTime = DateTime.Now;
 
@@ -36,7 +71,7 @@ public sealed partial class MainPage : Page
             if (_score >= _clicksRequired)
             {
                 _gameOver = true;
-                _timer.Stop();
+                _gameTimer.Stop();
                 DisplayFinalScore();
             }
             else

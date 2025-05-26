@@ -12,7 +12,8 @@
             </ResourceDictionary.MergedDictionaries>
 
             <!--  Add resources here  -->
-            <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="#fed640" />
+            <SolidColorBrush x:Key="TechoramaYellow" Color="#fed640" />
+            <SolidColorBrush x:Key="TechoramaBlue" Color="#2c6090" />
 
         </ResourceDictionary>
     </Application.Resources>

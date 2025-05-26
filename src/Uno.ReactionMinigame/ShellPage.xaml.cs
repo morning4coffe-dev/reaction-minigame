@@ -24,7 +24,10 @@ public sealed partial class ShellPage : Page
     public ShellPage()
     {
         this.InitializeComponent();
+        Instance = this;
     }
+
+    public static ShellPage Instance { get; private set; }
 
     public Frame AppFrame => MainFrame;
 }
