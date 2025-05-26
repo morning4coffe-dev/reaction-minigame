@@ -30,4 +30,6 @@ public sealed partial class ShellPage : Page
     public static ShellPage Instance { get; private set; }
 
     public Frame AppFrame => MainFrame;
+
+    public LeaderboardViewModel LeaderboardViewModel { get; } = new();
 }

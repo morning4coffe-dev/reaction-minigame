@@ -48,7 +48,15 @@ public sealed partial class SignInPage : Page
         NameTextBox.Text = string.Empty;
         EmailTextBox.Text = string.Empty;
 
-        (App.Current as App)!.RootFrame!.Navigate(typeof(MainPage));
+        var entry = new LeaderboardEntry
+        {
+            Name = name,
+            Email = email,
+            Time = TimeSpan.Zero,
+        };
+
+        var serialized = System.Text.Json.JsonSerializer.Serialize(entry, SerializerContext.Default.LeaderboardEntry);
+        Frame.Navigate(typeof(MainPage), serialized);
     }
 
 }

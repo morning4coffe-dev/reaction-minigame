@@ -5,13 +5,6 @@
     xmlns:local="using:Uno.ReactionMinigame">
 
     <Grid>
-        <TextBlock
-            x:Name="ScoreTextBlock"
-            Margin="0,20,0,0"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            FontSize="24"
-            Foreground="Black" />
 
         <TextBlock
             x:Name="CountdownTextBlock"
@@ -19,18 +12,48 @@
             VerticalAlignment="Center"
             FontSize="72"
             FontWeight="Bold"
-            Foreground="Red"
+            Foreground="Black"
             Visibility="Collapsed" />
 
-        <Canvas
-            x:Name="MyCanvas"
-            Margin="60"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch" />
-        <ProgressBar
-            x:Name="Progress"
-            Height="10"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Bottom" />
+        <StackPanel
+            x:Name="ResultsGrid"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Spacing="8"
+            Visibility="Collapsed">
+            <TextBlock
+                HorizontalAlignment="Center"
+                FontSize="40"
+                Text="Game over!" />
+            <TextBlock HorizontalAlignment="Center" Text="Your time was" />
+            <TextBlock
+                x:Name="FinalTimeTextBlock"
+                HorizontalAlignment="Center"
+                FontSize="40" />
+            <TextBlock HorizontalAlignment="Center" Text="You are currently" />
+            <TextBlock
+                x:Name="CurrentRankTextBlock"
+                HorizontalAlignment="Center"
+                FontSize="40" />
+            <Button
+                x:Name="PlayAgainButton"
+                Margin="10"
+                HorizontalAlignment="Center"
+                Click="OnPlayAgainClicked"
+                Content="Play again" />
+        </StackPanel>
+
+        <Grid x:Name="GameGrid">
+            <Canvas
+                x:Name="MyCanvas"
+                Margin="60"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch" />
+            <ProgressBar
+                x:Name="Progress"
+                Height="10"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Bottom" />
+        </Grid>
     </Grid>
 </Page>

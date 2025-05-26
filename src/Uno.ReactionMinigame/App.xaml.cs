@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Uno.Resizetizer;
 
@@ -21,7 +22,7 @@ public partial class App : Application
 
     internal int Score { get; set; }
 
-    protected override void OnLaunched(LaunchActivatedEventArgs args)
+    protected override async void OnLaunched(LaunchActivatedEventArgs args)
     {
         MainWindow = new Window();
 #if DEBUG
@@ -47,12 +48,14 @@ public partial class App : Application
         }
 
         MainWindow.SetWindowIcon();
+
+        await _shellPage.LeaderboardViewModel.InitializeAsync();
         // Ensure the current window is active
         MainWindow.Activate();
     }
 
     /// <summary>
-    /// Invoked when Navigation to a certain page fails
+    /// Invoked when Navigation to a certain pa ge fails
     /// </summary>
     /// <param name="sender">The Frame which failed navigation</param>
     /// <param name="e">Details about the navigation failure</param>

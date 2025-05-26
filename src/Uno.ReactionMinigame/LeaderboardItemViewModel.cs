@@ -22,5 +22,5 @@ public class LeaderboardItemViewModel : ObservableObject
 
     public string Email => _leaderboardEntry.Email;
 
-    public string Time => _leaderboardEntry.Time.TotalMilliseconds.ToString("0:00");
+    public string Time => _leaderboardEntry.Time.TotalSeconds.ToString("0.000") + " s";
 }

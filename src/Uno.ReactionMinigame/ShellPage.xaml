@@ -52,9 +52,35 @@
                 <Frame x:Name="MainFrame" />
             </Grid>
 
+            <Grid Grid.Column="1" Background="{ThemeResource TechoramaBlue}">
+                <StackPanel Padding="12" Spacing="4">
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        FontSize="24"
+                        FontWeight="Bold"
+                        Foreground="White"
+                        Text="Leaderboard" />
+
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        FontSize="20"
+                        Foreground="White"
+                        Text="#1" />
+                    <TextBlock
+                        x:Name="CurrentWinnerTextBlock"
+                        HorizontalAlignment="Center"
+                        FontSize="30"
+                        FontWeight="Bold"
+                        Foreground="White"
+                        Text="{x:Bind LeaderboardViewModel.CurrentBest.Name, Mode=OneWay}"
+                        TextAlignment="Center"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+            </Grid>
+
             <Grid
                 x:Name="Leaderboard"
-                Grid.RowSpan="2"
+                Grid.Row="1"
                 Grid.Column="1"
                 BorderBrush="#2c6090"
                 BorderThickness="4,0,0,0">
@@ -64,12 +90,36 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <Grid Background="{ThemeResource TechoramaBlue}">
-                    <StackPanel>
-                        <TextBlock Text="TIME TO BEAT" />
-                    </StackPanel>
+
+                <Grid Grid.Row="1">
+                    <ListView ItemsSource="{x:Bind LeaderboardViewModel.Leaderboard, Mode=OneWay}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="local:LeaderboardItemViewModel">
+                                <Grid ColumnSpacing="4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="32" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock
+                                        HorizontalAlignment="Left"
+                                        FontWeight="Bold"
+                                        Text="{x:Bind Order}" />
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        FontSize="12"
+                                        Text="{x:Bind Name}"
+                                        TextTrimming="CharacterEllipsis"
+                                        ToolTipService.ToolTip="{x:Bind Email}" />
+                                    <TextBlock
+                                        Grid.Column="2"
+                                        FontSize="12"
+                                        Text="{x:Bind Time, Converter={StaticResource TimeSpanToStringConverter}}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </Grid>
-                <Grid Grid.Row="1" />
             </Grid>
         </Grid>
     </Grid>

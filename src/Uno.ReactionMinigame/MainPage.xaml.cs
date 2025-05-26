@@ -1,3 +1,5 @@
+using System.Diagnostics;
+using System.Text.Json;
 using Microsoft.UI;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml.Input;
@@ -9,17 +11,24 @@ public sealed partial class MainPage : Page
 {
     private Random _random = new Random();
     private int _score = 0;
-    private int _clicksRequired = 25;
-    private DispatcherTimer _gameTimer;
+    private int _clicksRequired = 15;
     private DateTime _startTime;
-    private bool _gameOver = false;
     private DispatcherQueueTimer _countdownTimer;
     private int _countdownValue;
+    private LeaderboardEntry _player;
+    private Stopwatch _timer = new Stopwatch();
 
     public MainPage()
     {
         this.InitializeComponent();
         StartCountdown();
+    }
+
+    protected override void OnNavigatedTo(NavigationEventArgs e)
+    {
+        base.OnNavigatedTo(e);
+
+        _player = JsonSerializer.Deserialize((string)e.Parameter, SerializerContext.Default.LeaderboardEntry);
     }
 
     private void StartCountdown()
@@ -52,66 +61,38 @@ public sealed partial class MainPage : Page
 
     private void StartReactionGame()
     {
-        _gameTimer = new DispatcherTimer();
-        _gameTimer.Interval = TimeSpan.FromMilliseconds(10);
-        _gameTimer.Tick += OnTimerTick;
-        _gameTimer.Start();
+        _timer.Start();
 
         _startTime = DateTime.Now;
 
         Progress.Maximum = _clicksRequired;
-        ScoreTextBlock.Visibility = Visibility.Visible;
         StartNewRound();
-    }
-
-    private void OnTimerTick(object sender, object e)
-    {
-        if (!_gameOver)
-        {
-            if (_score >= _clicksRequired)
-            {
-                _gameOver = true;
-                _gameTimer.Stop();
-                DisplayFinalScore();
-            }
-            else
-            {
-                UpdateElapsedTime();
-            }
-        }
     }
 
     private void StartNewRound()
     {
-        if (_gameOver)
-        {
-            return;
-        }
-
         var ellipse = CreateRandomEllipse();
         MyCanvas.Children.Add(ellipse);
 
         ellipse.PointerPressed += Ellipse_PointerPressed;
     }
 
-    private void UpdateElapsedTime()
-    {
-        var elapsedTime = DateTime.Now - _startTime;
-        ScoreTextBlock.Text = $"Time: {elapsedTime.TotalSeconds:F3} sec";
-    }
-
     private void Ellipse_PointerPressed(object sender, PointerRoutedEventArgs e)
     {
-        if (_gameOver)
-        {
-            return;
-        }
-
         _score++;
         Progress.Value++;
         MyCanvas.Children.Remove(sender as Ellipse);
 
-        StartNewRound();
+        if (_score == _clicksRequired)
+        {
+            _timer.Stop();
+            DisplayFinalScore();
+            return;
+        }
+        else
+        {
+            StartNewRound();
+        }
     }
 
     private Ellipse CreateRandomEllipse()
@@ -133,27 +114,36 @@ public sealed partial class MainPage : Page
         return ellipse;
     }
 
-    private void DisplayFinalScore()
+    private async void DisplayFinalScore()
     {
-        var timeTaken = DateTime.Now - _startTime;
-        var finalScoreText = new TextBlock
+        ResultsGrid.Visibility = Visibility.Visible;
+        var entry = _player with
         {
-            Text = $"Finished!\nTime Taken: {timeTaken.TotalSeconds:F2} seconds\nFinal Score: {_score}",
-            FontSize = 24,
-            Foreground = new SolidColorBrush(Colors.Black),
-            HorizontalAlignment = HorizontalAlignment.Center,
-            VerticalAlignment = VerticalAlignment.Center,
-            Margin = new Thickness(0, 50, 0, 0)
+            Time = _timer.Elapsed,
         };
 
-        // Store the score globally to be used in SignInPage
-        var app = (App)Application.Current;
-        app.Score = _score; // Assuming _score is the current score
+        FinalTimeTextBlock.Text = $"{entry.Time.TotalSeconds:F3} s";
+        var leaderboardViewModel = ShellPage.Instance.LeaderboardViewModel;
+        var leaderboard = leaderboardViewModel.LeaderboardEntries;
+        string position = "#";
+        if (leaderboard.Count == 0)
+        {
+            position += "1";
+        }
+        else
+        {
+            var numberOfFasterPlayers = leaderboard.Count(x => x.Time < entry.Time);
+            position += (numberOfFasterPlayers + 1).ToString();
+        }
+        CurrentRankTextBlock.Text = position;
 
-        ScoreTextBlock.Visibility = Visibility.Collapsed;
+        await ShellPage.Instance.LeaderboardViewModel.AddTimeAsync(entry);
 
         MyCanvas.Children.Clear();
-        MyCanvas.Children.Add(finalScoreText);
     }
 
+    private void OnPlayAgainClicked(object sender, RoutedEventArgs e)
+    {
+        Frame.GoBack();
+    }
 }
