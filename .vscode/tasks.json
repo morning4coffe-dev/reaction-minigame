@@ -7,9 +7,9 @@
       "type": "process",
       "args": [
         "build",
-        "${workspaceFolder}/Uno.ReactionMinigame/Uno.ReactionMinigame.csproj",
+        "${workspaceFolder}/src/Uno.ReactionMinigame/Uno.ReactionMinigame.csproj",
         "/property:GenerateFullPaths=true",
-        "/property:TargetFramework=net9.0-browserwasm",
+        "/property:TargetFramework=net10.0-browserwasm",
         "/consoleloggerparameters:NoSummary"
       ],
       "problemMatcher": "$msCompile"
@@ -20,9 +20,9 @@
       "type": "process",
       "args": [
         "publish",
-        "${workspaceFolder}/Uno.ReactionMinigame/Uno.ReactionMinigame.csproj",
+        "${workspaceFolder}/src/Uno.ReactionMinigame/Uno.ReactionMinigame.csproj",
         "/property:GenerateFullPaths=true",
-        "/property:TargetFramework=net9.0-browserwasm",
+        "/property:TargetFramework=net10.0-browserwasm",
         "/consoleloggerparameters:NoSummary"
       ],
       "problemMatcher": "$msCompile"
@@ -33,9 +33,9 @@
       "type": "process",
       "args": [
         "build",
-        "${workspaceFolder}/Uno.ReactionMinigame/Uno.ReactionMinigame.csproj",
+        "${workspaceFolder}/src/Uno.ReactionMinigame/Uno.ReactionMinigame.csproj",
         "/property:GenerateFullPaths=true",
-        "/property:TargetFramework=net9.0-desktop",
+        "/property:TargetFramework=net10.0-desktop",
         "/consoleloggerparameters:NoSummary"
       ],
       "problemMatcher": "$msCompile"
@@ -46,9 +46,9 @@
       "type": "process",
       "args": [
         "publish",
-        "${workspaceFolder}/Uno.ReactionMinigame/Uno.ReactionMinigame.csproj",
+        "${workspaceFolder}/src/Uno.ReactionMinigame/Uno.ReactionMinigame.csproj",
         "/property:GenerateFullPaths=true",
-        "/property:TargetFramework=net9.0-desktop",
+        "/property:TargetFramework=net10.0-desktop",
         "/consoleloggerparameters:NoSummary"
       ],
       "problemMatcher": "$msCompile"

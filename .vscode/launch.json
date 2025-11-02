@@ -26,10 +26,31 @@
       "server": {
         "runtimeExecutable": "dotnet",
         "program": "run",
-        "args": ["--no-build","-f","net9.0-browserwasm","--launch-profile", "Uno.ReactionMinigame (WebAssembly)"],
+        "args": ["--no-build","-f","net10.0-browserwasm","--launch-profile", "Uno.ReactionMinigame (WebAssembly)"],
         "outputCapture": "std",
         "timeout": 30000,
-        "cwd": "${workspaceFolder}/Uno.ReactionMinigame"
+        "cwd": "${workspaceFolder}/src/Uno.ReactionMinigame"
+      }
+    },
+    {
+      // Use IntelliSense to find out which attributes exist for C# debugging
+      // Use hover for the description of the existing attributes
+      // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+      "name": "Uno Platform WebAssembly Debug (Edge)",
+      "type": "msedge",
+      "request": "launch",
+      "url": "http://localhost:5000",
+      "webRoot": "${workspaceFolder}/src/Uno.ReactionMinigame",
+      "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
+      "timeout": 30000,
+      "preLaunchTask": "build-wasm",
+      "server": {
+        "runtimeExecutable": "dotnet",
+        "program": "run",
+        "args": ["--no-build","-f","net10.0-browserwasm","--launch-profile", "Uno.ReactionMinigame (WebAssembly)"],
+        "outputCapture": "std",
+        "timeout": 30000,
+        "cwd": "${workspaceFolder}/src/Uno.ReactionMinigame"
       }
     },
     {
@@ -41,13 +62,13 @@
       "request": "launch",
       "preLaunchTask": "build-desktop",
       // If you have changed target frameworks, make sure to update the program path.
-      "program": "${workspaceFolder}/Uno.ReactionMinigame/bin/Debug/net9.0-desktop/Uno.ReactionMinigame.dll",
+      "program": "${workspaceFolder}/src/Uno.ReactionMinigame/bin/Debug/net10.0-desktop/Uno.ReactionMinigame.dll",
       "args": [],
       "launchSettingsProfile": "Uno.ReactionMinigame (Desktop)",
       "env": {
         "DOTNET_MODIFIABLE_ASSEMBLIES": "debug"
       },
-      "cwd": "${workspaceFolder}/Uno.ReactionMinigame",
+      "cwd": "${workspaceFolder}/src/Uno.ReactionMinigame",
       // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
       "console": "internalConsole",
       "stopAtEntry": false
